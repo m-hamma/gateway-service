@@ -1,5 +1,26 @@
-server.port=8080
+server:
+  port: 8080
 
-spring.cloud.gateway.mvc.routes[0].id=order-service
-spring.cloud.gateway.mvc.routes[0].uri=http://localhost:8081
-spring.cloud.gateway.mvc.routes[0].predicates[0]=Path=/api/orders/**
+spring:
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: auth-service
+              uri: http://localhost:8081
+              predicates:
+                - Path=/api/auth/**
+
+            - id: order-service
+              uri: http://localhost:8081
+              predicates:
+                - Path=/api/orders/**
+
+app:
+  jwt:
+    secret: MyVerySecretKeyForJwtGeneration123456789123456789
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
